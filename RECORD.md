@@ -48,3 +48,8 @@ https://gabrieltanner.org/blog/nestjs-file-uploading-using-multer/
 some links:
 
 https://juejin.cn/post/7076629305874186276
+sequelize demo: 
+https://github.com/SephirothKid/nest-zero-to-one
+
+jwt:
+https://github.com/HeyiMaster/nest-starter
