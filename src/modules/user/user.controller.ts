@@ -24,10 +24,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  //   @Get()
-  //   getUser(@Query() { id }) {
-  //     return this.userService.findOne(id);
-  //   }
+  @Get()
+  getUser(@Query() { id }) {
+    //   return this.userService.findOne(id);
+  }
 
   //  x-www-form-urlencoded
   //   @Post()
