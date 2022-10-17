@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
+import { Connection, MissingDeleteDateColumnError, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 
 // @InjectRepository(UserEntity)
@@ -15,16 +15,31 @@ export class UserService {
   ) {}
 
   findAll(): Promise<UserEntity[]> {
-    // return [
-    //   { name: 'Lantz', gender: 'male' },
-    //   { name: 'Fancy', gender: 'female' },
-    // ];
-
     return this.userRepository.find();
   }
 
-  //   async findOne(id: number): Promise<UserEntity> {
-  //     // TODO: @nestjs/typeorm@8.0以上版本不支持最新的typeorm@3.0，所以id报红
-  //     return this.userRepository.findOne(id);
-  //   }
+  async findOne(id: number): Promise<UserEntity> {
+    // TODO: 新版本findOne()改成findOneBy({})
+    return this.userRepository.findOneBy({ id: id });
+  }
+
+  async createUser(user): Promise<UserEntity> {
+    const isExist = await this.userRepository.findOneBy({ id: user.id });
+
+    if (isExist) {
+      throw new HttpException(
+        {
+          message: 'Input data validation failed',
+          error: 'name must be unique.',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return await this.userRepository.save(user);
+  }
+
+  async removeUserById(id): Promise<void> {
+    this.userRepository.remove(id);
+  }
 }

@@ -1,6 +1,7 @@
 # Record
 
 ### nest 微生成器
+
 ```sh
 nest --help
 
@@ -11,7 +12,7 @@ nest g co user modules
 
 
 # service
-nest g service user modules 
+nest g service user modules
 or
 nest g s user modules
 
@@ -19,6 +20,9 @@ nest g s user modules
 nest g module user modules
 or
 nest g mo user modules
+
+
+nest g pipe validation common/pipes
 ```
 
 **tip:** if you don't need `.spec` file, you can add `--no-spec` in the end.
@@ -40,15 +44,21 @@ examples link:
 https://github.com/nestjs/nest/blob/master/sample/29-file-upload/src/app.controller.ts
 
 https://gabrieltanner.org/blog/nestjs-file-uploading-using-multer/
+
 ```
 
+3. 如何自定义 swagger 样式 swagger-ui-express
+
+```sh
+https://github.com/scottie1984/swagger-ui-express
+```
 
 ### The end
 
 some links:
 
 https://juejin.cn/post/7076629305874186276
-sequelize demo: 
+sequelize demo:
 https://github.com/SephirothKid/nest-zero-to-one
 
 jwt:

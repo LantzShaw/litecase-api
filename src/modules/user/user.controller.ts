@@ -9,9 +9,19 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
+import {
+  ApiBody,
+  ApiResponse,
+  ApiParam,
+  ApiBearerAuth,
+  ApiTags,
+  ApiQuery,
+} from '@nestjs/swagger';
+import { ValidationPipe } from '../../common/pipes/validation.pipe';
 import { UsereDto } from './user.dto';
 import { UserService } from './user.service';
 
@@ -25,23 +35,29 @@ export class UserController {
   }
 
   @Get()
+  @ApiQuery({ name: 'id', required: true })
   getUser(@Query() { id }) {
-    //   return this.userService.findOne(id);
+    return this.userService.findOne(id);
   }
 
-  //  x-www-form-urlencoded
-  //   @Post()
-  //   createUser(@Body() { userInfo }) {
-  //     console.log('-------user info-------', userInfo);
-  //   }
-
-  @UseInterceptors(FileInterceptor('file'))
+  // NOTE: x-www-form-urlencoded
   @Post()
-  createUser(@Body() { userInfo }) {
+  @UsePipes(new ValidationPipe())
+  createUser(@Body() userInfo: UsereDto) {
     console.log('-------user info-------', userInfo);
 
-    return { userInfo };
+    this.userService.createUser(userInfo);
+
+    return userInfo;
   }
+
+  // @UseInterceptors(FileInterceptor('file'))
+  // @Post()
+  // createUser(@Body() { userInfo }) {
+  //   console.log('-------create user-------', userInfo);
+
+  //   return { userInfo };
+  // }
 
   @Delete()
   removeUserById(@Query() { id }) {
