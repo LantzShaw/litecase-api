@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -24,12 +25,16 @@ import {
 import { ValidationPipe } from '../../common/pipes/validation.pipe';
 import { UsereDto } from './user.dto';
 import { UserService } from './user.service';
+import { RoleGuard } from 'src/common/guards/role.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
 
 @Controller('user')
+@UseGuards(RoleGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @Roles('admin')
   getUsers() {
     return this.userService.findAll();
   }

@@ -29,6 +29,7 @@ export class UserService {
     if (isExist) {
       throw new HttpException(
         {
+          status: HttpStatus.BAD_REQUEST,
           message: 'Input data validation failed',
           error: 'name must be unique.',
         },

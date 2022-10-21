@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { UserController } from './modules/user/user.controller';
 import { UserService } from './modules/user/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -23,4 +24,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   // controllers: [AppController, UserController],
   // providers: [AppService, UserService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    // 为 user 路由添加中间件
+    consumer
+      .apply(LoggerMiddleware)
+      .exclude({ path: 'user', method: RequestMethod.POST }) // user路由的POST方法
+      .forRoutes('user');
+  }
+}
