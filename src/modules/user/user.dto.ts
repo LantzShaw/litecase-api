@@ -5,7 +5,7 @@ export class UsereDto {
   @IsString({ message: '用户名必须是 String 类型' })
   readonly username: string;
 
-  @IsString({ message: '密码必须是 String 类型' })
+  @IsString({ message: '邮箱必须是 String 类型' })
   readonly email: string;
 
   @IsNotEmpty({ message: '密码不能为空' })
