@@ -39,7 +39,16 @@ async function bootstrap() {
 
   await app.listen(3000);
 
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  // console.clear();
+
+  console.log(
+    '\x1b[36m',
+    '------------------------------------------------------',
+  );
+  console.log(`|                                                      |`);
+  console.log(`|   🍃 Application is running on: ${await app.getUrl()}    |`);
+  console.log(`|                                                      |`);
+  console.log(' ------------------------------------------------------');
 }
 
 bootstrap();
