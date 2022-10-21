@@ -21,6 +21,8 @@ import {
   ApiBearerAuth,
   ApiTags,
   ApiQuery,
+  ApiExtension,
+  ApiOperation,
 } from '@nestjs/swagger';
 import { ValidationPipe } from '../../common/pipes/validation.pipe';
 import { UsereDto } from './user.dto';
@@ -28,12 +30,18 @@ import { UserService } from './user.service';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 
+@ApiTags('user')
 @Controller('user')
 @UseGuards(RoleGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @ApiExtension('x-author', 'DoveAz')
+  @ApiOperation({
+    summary: '哈哈',
+    description: '你好啊',
+  })
   @Roles('admin')
   getUsers() {
     return this.userService.findAll();
