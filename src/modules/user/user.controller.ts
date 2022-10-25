@@ -29,6 +29,7 @@ import { UsereDto } from './user.dto';
 import { UserService } from './user.service';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('user')
 @Controller('user')
@@ -42,7 +43,8 @@ export class UserController {
     summary: '哈哈',
     description: '你好啊',
   })
-  @Roles('admin')
+  @UseGuards(AuthGuard('jwt'))
+  // @Roles('admin')
   getUsers() {
     return this.userService.findAll();
   }

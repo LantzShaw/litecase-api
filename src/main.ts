@@ -47,6 +47,10 @@ async function bootstrap() {
   );
   console.log(`|                                                      |`);
   console.log(`|   🍃 Application is running on: ${await app.getUrl()}    |`);
+
+  console.log(
+    `|   🍃 document is running on: http://localhost:3000/doc.html#/home    |`,
+  );
   console.log(`|                                                      |`);
   console.log(' ------------------------------------------------------');
 }

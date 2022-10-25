@@ -51,6 +51,14 @@ https://gabrieltanner.org/blog/nestjs-file-uploading-using-multer/
 
 ```sh
 https://github.com/scottie1984/swagger-ui-express
+
+```
+
+4. 使用`@nestjs/passport` 与 `passport-local` 的时候，报错 `Error: Cannot find module 'passport'`
+
+```sh
+# 需要安装 passport 依赖
+$ pnpm add passport
 ```
 
 ### The end

@@ -4,11 +4,16 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { UserController } from './modules/user/user.controller';
 import { UserService } from './modules/user/user.service';
+import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
+import { StatusMonitorModule } from 'nest-status-monitor';
+import statusMonitorConfig from './config/statusMonitorConfig';
+
 @Module({
   imports: [
+    StatusMonitorModule.setUp(statusMonitorConfig),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
@@ -20,6 +25,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       entities: ['dist/**/*.entity{.ts,.js}'],
     }),
     UserModule,
+    AuthModule,
   ],
   // controllers: [AppController, UserController],
   // providers: [AppService, UserService],
