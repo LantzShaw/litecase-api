@@ -10,6 +10,8 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 import { StatusMonitorModule } from 'nest-status-monitor';
 import statusMonitorConfig from './config/statusMonitorConfig';
+import { TasksModule } from './tasks/tasks.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import statusMonitorConfig from './config/statusMonitorConfig';
       synchronize: false,
       entities: ['dist/**/*.entity{.ts,.js}'],
     }),
+    ScheduleModule.forRoot(),
+    TasksModule,
     UserModule,
     AuthModule,
   ],

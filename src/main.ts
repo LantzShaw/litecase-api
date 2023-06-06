@@ -5,7 +5,7 @@ import { knife4jSetup } from 'nest-knife4j';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+// import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,19 +22,17 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  knife4jSetup(app, {
-    urls: [
-      {
-        name: '2.X版本',
-        url: `/api-json`,
-        swaggerVersion: '3.0',
-        location: `/api-json`,
-      },
-    ],
-  });
+  knife4jSetup(app, [
+    {
+      name: '2.X版本',
+      url: `/api-json`,
+      swaggerVersion: '3.0',
+      location: `/api-json`,
+    },
+  ]);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new TransformInterceptor());
+  // app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(3000);

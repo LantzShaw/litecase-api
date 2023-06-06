@@ -74,3 +74,34 @@ https://github.com/HeyiMaster/nest-starter
 
 打造日志系统:
 https://zhuanlan.zhihu.com/p/379827158
+
+```sh
+import { Injectable, HttpService } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  constructor(private httpService: HttpService) {}
+
+  getWeather() {
+    return this.httpService.get('https://api.openweathermap.org/data/2.5/weather?q=cairo&appid=c9661625b3eb09eed099288fbfad560a').pipe(
+      map(response => response.data)
+    );
+
+  }
+}
+
+# 调用
+import { Controller, Get } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getWeather() {
+    const res = this.appService.getWeather();
+    return res;
+  }
+}
+```
