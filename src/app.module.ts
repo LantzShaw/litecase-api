@@ -23,7 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       username: 'root',
       password: '123456',
       database: 'litecase',
-      synchronize: false,
+      synchronize: true, // NOTE: 是否自动同步数据库, 生产环境需要设置false
       entities: ['dist/**/*.entity{.ts,.js}'],
     }),
     ScheduleModule.forRoot(),

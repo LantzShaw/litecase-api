@@ -1,6 +1,12 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, MissingDeleteDateColumnError, Repository } from 'typeorm';
+import {
+  Connection,
+  Like,
+  MissingDeleteDateColumnError,
+  MoreThan,
+  Repository,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 
 // @InjectRepository(UserEntity)
@@ -15,12 +21,43 @@ export class UserService {
   ) {}
 
   findAll(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+    console.log(
+      '*************user*****************s',
+      this.userRepository.find(),
+    );
+
+    return this.userRepository.find({
+      select: ['id', 'email'],
+      where: [
+        {
+          id: MoreThan(2),
+          createdAt: MoreThan(new Date()),
+        },
+        {
+          email: Like('%lantz%'),
+        },
+      ],
+      take: 2,
+      order: {
+        id: 'ASC',
+      },
+    });
+
+    // try {
+    //   return this.userRepository.find();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   async findOne(id: number): Promise<UserEntity> {
     // TODO: 新版本findOne()改成findOneBy({})
-    return this.userRepository.findOneBy({ id: id });
+
+    try {
+      return this.userRepository.findOneBy({ id: id });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async createUser(user): Promise<UserEntity> {

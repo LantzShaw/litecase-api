@@ -82,6 +82,7 @@ export class UserController {
   // NOTE: 也可以用Patch
   @Put(':id')
   updateUserById(@Param() { id }) {
+    // NOTE: 相当于 @Param('id) id
     console.log('-------update user id-------', id);
   }
 

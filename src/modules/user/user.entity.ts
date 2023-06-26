@@ -1,10 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 // NOTE: user 对应的是表名称
 // @Entity({ name: 'user' })
 @Entity('user', { schema: 'orm' })
 export class UserEntity {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+  // @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+  @PrimaryColumn({ type: 'uuid' })
   id: number;
 
   @Column('varchar', { name: 'username', length: 20 })
